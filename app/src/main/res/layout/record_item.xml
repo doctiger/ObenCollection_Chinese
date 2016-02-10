@@ -41,7 +41,7 @@
             android:layout_toLeftOf="@+id/recBtn"
             android:layout_toStartOf="@+id/recBtn"
             android:background="@drawable/button_border_black"
-            android:text="LISTEN"
+            android:text="@string/listen_str"
             android:textColor="@color/colorBlack"
             android:textSize="13sp" />
 
@@ -52,7 +52,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginRight="10dp"
             android:background="@drawable/button_border_red"
-            android:text="REC"
+            android:text="@string/rec_str"
             android:textColor="@color/colorRed"
             android:textSize="13sp" />
     </RelativeLayout>

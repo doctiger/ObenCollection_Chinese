@@ -1,23 +1,30 @@
 <resources>
-    <string name="app_name">Oben</string>
-    <string name="ok">OK</string>
+    <string name="app_name">ObenZh</string>
+    <string name="ok">好</string>
 
-    <string name="startRecording">Touch button to start recording.</string>
-    <string name="stopRecording">Touch button to stop recording.</string>
+    <string name="startRecording">轻触按钮开始录制。</string>
+    <string name="stopRecording">触摸按钮停止录制。</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="cancelButtonStr">保存并退出</string>
 
-    <string name="menu_settings">Settings</string>
-    <string name="choose_format_title">Choose Audio Format</string>
-    <string name="start_recording">Record</string>
-    <string name="stop_recording">Stop</string>
-    <string name="audio_format">Format</string>
-    <string name="header_description">When the sunlight strikes raindrops in the air, they act like a prism and form a rainbow.</string>
-    <string name="cancelButtonStr"><![CDATA[Save & Exit]]></string>
-
-    <string name="permission_available_microphone">Microphone Permission has been granted. Microphone can now be recorded.</string>
-    <string name="permission_available_storage">Storage Permissions have been granted. Storage can now be writed.</string>
-    <string name="permissions_not_granted">Permissions were not granted.</string>
-    <string name="permission_microphone_rationale">Microphone permission is needed to record the voice.</string>
-    <string name="permission_storage_rationale">Storage permissions are needed to write the storage.</string>
+    <string name="permission_available_microphone">麦克风权限已被授予。麦克风现在可以记录下来。</string>
+    <string name="permission_available_storage">存储权限被授予。存储现在可以所著。</string>
+    <string name="permissions_not_granted">权限是不批。</string>
+    <string name="permission_microphone_rationale">麦克风需要权限来录制语音。</string>
+    <string name="permission_storage_rationale">存储需要权限写入存储。</string>
+    <string name="your_profile">个人资料</string>
+    <string name="setup_avatar">设置声音档案</string>
+    <string name="user_id">用户名</string>
+    <string name="avatar_id">声音档案ID</string>
+    <string name="email_str">Email</string>
+    <string name="logout_str">注销</string>
+    <string name="please_login">请登录</string>
+    <string name="password_str">密码</string>
+    <string name="cancel_str">取消</string>
+    <string name="regular_str">基本模式</string>
+    <string name="commercial_str">高级模式</string>
+    <string name="freestyle_str">自由模式</string>
+    <string name="rec_str">录音</string>
+    <string name="listen_str">试听</string>
+    <string name="login_str">登錄</string>
 </resources>

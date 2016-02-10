@@ -1,4 +1,4 @@
-package com.obenproto.oben;
+package com.obenproto.obenzh;
 
 import org.junit.Test;
 
