@@ -98,6 +98,7 @@ public class RegularActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                         finish();
                         dialog.cancel();
                     }
@@ -142,7 +143,7 @@ public class RegularActivity extends Activity {
     public void onRegularAvatarID(int userId) {
 
         ObenAPIService client = ObenAPIClient.newInstance(ObenAPIService.class);
-        Call<List<ObenApiResponse>> call = client.getRegularAvatars(userId);
+        Call<List<ObenApiResponse>> call = client.getAvatars(userId);
 
         call.enqueue(new Callback<List<ObenApiResponse>>() {
             @Override

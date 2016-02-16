@@ -14,9 +14,6 @@ import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Path;
 
-/**
- * Created by Petro Rington on 12.11.2015.
- */
 public interface ObenAPIService {
 
     ////  Recall of user login
@@ -35,12 +32,19 @@ public interface ObenAPIService {
                                          @Part("avatarId") int avatarId);
 
     ////  Recall of save user avatar ( ​updated since 1.0 release ​)
-    ////  (don't exit the avatarID)Create the avatarID for regular, commercial and freestyle
+    ////  (don't exit the avatarID)Create the avatarID for regular_chinese
     @Multipart
-    @POST("morphing/ws/MorphingService/saveUserAvatar")
-    Call<ObenApiResponse> saveOriginalUserAvatar(@Part("userId") int userId,
-                                                 @Part("recordId") int recordId,
-                                                 @Part("audioFile") RequestBody audioFile);
+    @POST("morphing/ws/MorphingService/saveUserAvatar/mode/4")
+    Call<ObenApiResponse> saveRegularZhUserAvatar(@Part("userId") int userId,
+                                                @Part("recordId") int recordId,
+                                                @Part("audioFile") RequestBody audioFile,
+                                                @Part("avatarId") int avatarId);
+
+    @Multipart
+    @POST("morphing/ws/MorphingService/saveUserAvatar/mode/4")
+    Call<ObenApiResponse> saveOriginalRegularZhUserAvatar(@Part("userId") int userId,
+                                                        @Part("recordId") int recordId,
+                                                        @Part("audioFile") RequestBody audioFile);
 
     ////  Recall of save regular avatar ( ​updated since 1.0 release ​)
     @Multipart
@@ -95,6 +99,12 @@ public interface ObenAPIService {
     ////    Recall of avatar data
     @GET("morphing/ws/MorphingService/getAvatar/{avatarId}")
     Call<ObenApiResponse> getAvatarData(@Path("avatarId") int avatarId);
+
+    /**
+     * Get the avatar ID for Regular_Chinese
+     */
+    @GET("morphing/ws/MorphingService/getAvatars/{userId}/mode/4")
+    Call<List<ObenApiResponse>> getAvatars(@Path("userId") int userId);
 
     /**
      * Get the avatar ID for Regular

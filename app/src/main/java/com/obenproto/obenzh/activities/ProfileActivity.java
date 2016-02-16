@@ -51,7 +51,7 @@ public class ProfileActivity extends Activity {
         setupAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, OptionActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, RegularActivity.class);
                 startActivity(intent);
                 finish();
             }

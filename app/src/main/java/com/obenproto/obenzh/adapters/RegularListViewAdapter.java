@@ -259,10 +259,7 @@ public class RegularListViewAdapter extends BaseAdapter implements ActivityCompa
                         }
 
                     } else {
-
-                        int btnIndex = position;
-
-                        stopRecording(list.size() - btnIndex);
+                        stopRecording(list.size() - position);
                     }
                 }
             }
@@ -378,9 +375,9 @@ public class RegularListViewAdapter extends BaseAdapter implements ActivityCompa
 
         Call<ObenApiResponse> call;
         if (avatarId == 0) {
-            call = client.saveOriginalRegularUserAvatar(userId, recordId, audioFile);
+            call = client.saveOriginalRegularZhUserAvatar(userId, recordId, audioFile);
         } else {
-            call = client.saveRegularUserAvatar(userId, recordId, audioFile, avatarId);
+            call = client.saveRegularZhUserAvatar(userId, recordId, audioFile, avatarId);
         }
         call.enqueue(new Callback<ObenApiResponse>() {
             @Override
