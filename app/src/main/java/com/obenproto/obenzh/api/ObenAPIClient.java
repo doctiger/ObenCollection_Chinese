@@ -52,8 +52,8 @@ public class ObenAPIClient {
 
     public static <S> S newInstance(Class<S> serviceClass) {
 
-        httpClient.setReadTimeout(300, TimeUnit.SECONDS);
-        httpClient.setConnectTimeout(300, TimeUnit.SECONDS);
+        httpClient.setReadTimeout(120, TimeUnit.SECONDS);
+        httpClient.setConnectTimeout(120, TimeUnit.SECONDS);
 
         Retrofit retrofit = builder.client(httpClient).build();
         return retrofit.create(serviceClass);
