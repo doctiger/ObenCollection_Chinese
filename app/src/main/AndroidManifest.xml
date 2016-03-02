@@ -33,24 +33,6 @@
         </activity>
 
         <activity
-            android:name="com.obenproto.obenzh.activities.OptionActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name="com.obenproto.obenzh.activities.FreestyleActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name="com.obenproto.obenzh.activities.RegularActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -59,13 +41,5 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.obenproto.obenzh.activities.CommercialActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 </manifest>

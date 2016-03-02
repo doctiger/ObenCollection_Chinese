@@ -98,6 +98,8 @@ public class RegularActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        editor.putString("InitialLogin", "yes");
+                        editor.apply();
                         startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                         finish();
                         dialog.cancel();
@@ -173,7 +175,9 @@ public class RegularActivity extends Activity {
 
                 } else {
                     Log.d("Status", "Http Unauthorized");
-                    startActivity(new Intent(RegularActivity.this, OptionActivity.class));
+                    editor.putString("InitialLogin", "yes");
+                    editor.apply();
+                    startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                     finish();
                 }
             }
@@ -181,7 +185,9 @@ public class RegularActivity extends Activity {
             @Override
             public void onFailure(Throwable t) {
                 Log.d("Regular avtar ID", t.getMessage());
-                startActivity(new Intent(RegularActivity.this, OptionActivity.class));
+                editor.putString("InitialLogin", "yes");
+                editor.apply();
+                startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                 finish();
             }
         });
@@ -227,7 +233,9 @@ public class RegularActivity extends Activity {
 
                 } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d("Status", "Http Unauthorized");
-                    startActivity(new Intent(RegularActivity.this, OptionActivity.class));
+                    editor.putString("InitialLogin", "yes");
+                    editor.apply();
+                    startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                     finish();
 
                 } else {
@@ -238,7 +246,9 @@ public class RegularActivity extends Activity {
             @Override
             public void onFailure(Throwable t) {
                 Log.d("failure", t.getMessage());
-                startActivity(new Intent(RegularActivity.this, OptionActivity.class));
+                editor.putString("InitialLogin", "yes");
+                editor.apply();
+                startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                 finish();
             }
         });
@@ -267,7 +277,9 @@ public class RegularActivity extends Activity {
 
                 } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d("Status", "Http Unauthorized");
-                    startActivity(new Intent(RegularActivity.this, OptionActivity.class));
+                    editor.putString("InitialLogin", "yes");
+                    editor.apply();
+                    startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                     finish();
 
                 } else {
@@ -278,7 +290,9 @@ public class RegularActivity extends Activity {
             @Override
             public void onFailure(Throwable t) {
                 Log.d("Status", "failure");
-                startActivity(new Intent(RegularActivity.this, OptionActivity.class));
+                editor.putString("InitialLogin", "yes");
+                editor.apply();
+                startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                 finish();
             }
         });

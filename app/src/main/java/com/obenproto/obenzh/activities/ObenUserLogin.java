@@ -57,6 +57,10 @@ public class ObenUserLogin extends Activity {
         // Get the shareedpreference.
         if (!pref.getString("userEmail", "").equals("")) {
             Log.d("Already registered", "*****");
+
+            editor.putString("InitialLogin", "no");
+            editor.apply();
+
             Intent intent = new Intent(ObenUserLogin.this, ProfileActivity.class);
             startActivity(intent);
             finish();
@@ -117,6 +121,7 @@ public class ObenUserLogin extends Activity {
 
                     if (userLogin.equals(successMsg)) {
                         // Save the login infomation to sharedpreference.
+                        editor.putString("InitialLogin", "yes");
                         editor.putString("userEmail", email);
                         editor.putInt("userID", userID);
                         editor.apply();

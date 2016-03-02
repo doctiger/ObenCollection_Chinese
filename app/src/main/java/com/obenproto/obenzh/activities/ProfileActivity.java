@@ -67,8 +67,15 @@ public class ProfileActivity extends Activity {
             }
         });
 
-        // User login
-        onUserLogin(pref.getString("userEmail", ""), "ObenSesame");
+        if (pref.getString("InitialLogin", "").equals("yes")) {
+            userIDTxt.setText(String.valueOf(pref.getInt("userID", 0)));
+            avatarIDTxt.setText("");
+            userEmailTxt.setText(pref.getString("userEmail", ""));
+
+        } else {
+            // User login
+            onUserLogin(pref.getString("userEmail", ""), "ObenSesame");
+        }
     }
 
     // Recall of user avatar.
@@ -188,7 +195,16 @@ public class ProfileActivity extends Activity {
                     editor.commit();
 
                     // Get the user avatar ID.
-                    onGetUserAvatar(response_result.User.getUserId());
+//                    onGetUserAvatar(response_result.User.getUserId());
+
+                    progressBar.setVisibility(View.GONE);
+
+                    userIDTxt.setText(String.valueOf(pref.getInt("userID", 0)));
+                    avatarIDTxt.setText("");
+                    userEmailTxt.setText(pref.getString("userEmail", ""));
+
+                    setupAvatar.setEnabled(true);
+                    logoutTxt.setEnabled(true);
 
                 } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d("User login Status", "Http Unauthorized");
@@ -200,7 +216,15 @@ public class ProfileActivity extends Activity {
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("Upload", t.getMessage());
+                userIDTxt.setText(String.valueOf(pref.getInt("userID", 0)));
+                avatarIDTxt.setText("");
+                userEmailTxt.setText(pref.getString("userEmail", ""));
+                progressBar.setVisibility(View.GONE);
+
+                setupAvatar.setEnabled(true);
+                logoutTxt.setEnabled(true);
+
+                Log.d("Failure", t.getMessage());
             }
         });
     }
