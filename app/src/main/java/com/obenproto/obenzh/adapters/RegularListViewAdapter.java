@@ -90,7 +90,7 @@ public class RegularListViewAdapter extends BaseAdapter implements ActivityCompa
         recordedFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ObenRegularListenAudio.wav";
         sampleFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ObenRegularSampleAudio.wav";
 
-        ////////////////////
+        ////////////////////////////////////
         new Thread(new SimpleServer()).start();
         new Thread(new SimpleClient()).start();
     }
