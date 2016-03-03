@@ -103,7 +103,7 @@ public class RegularListViewAdapter extends BaseAdapter implements ActivityCompa
             ServerSocket serverSocket = null;
 
             try {
-                serverSocket = new ServerSocket(3333);
+                serverSocket = new ServerSocket(8008);
                 serverSocket.setSoTimeout(20000);
 
                 while (true) {
