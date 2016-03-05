@@ -27,4 +27,7 @@
     <string name="rec_str">录音</string>
     <string name="listen_str">试听</string>
     <string name="login_str">登錄</string>
+    <string name="unauthorized_toast_msg">
+        我们遇到了一个网络故障。我们现在已经成功保存了你们之前做的，你们现在可以继续工作了。我们对给你们带来的任何不便感到抱歉。
+    </string>
 </resources>

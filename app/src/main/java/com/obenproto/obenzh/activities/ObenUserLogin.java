@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.obenproto.obenzh.R;
 import com.obenproto.obenzh.api.ObenAPIClient;
@@ -141,6 +142,7 @@ public class ObenUserLogin extends Activity {
                 } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d("User Login Status :", "Http Unauthorized");
                     progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), R.string.unauthorized_toast_msg, Toast.LENGTH_LONG).show();
 
                 } else {
                     Log.d("User Login Status", "Server Connection Failure");

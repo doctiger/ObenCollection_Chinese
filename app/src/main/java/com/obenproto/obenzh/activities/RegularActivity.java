@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.obenproto.obenzh.R;
 import com.obenproto.obenzh.adapters.RegularListViewAdapter;
@@ -237,7 +238,8 @@ public class RegularActivity extends Activity {
 
                 } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d("Status", "Http Unauthorized");
-                    editor.putString("InitialLogin", "yes");
+                    Toast.makeText(getApplicationContext(), R.string.unauthorized_toast_msg, Toast.LENGTH_LONG).show();
+                    editor.putString("InitialLogin", "no");
                     editor.apply();
                     startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                     finish();
@@ -281,7 +283,8 @@ public class RegularActivity extends Activity {
 
                 } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d("Status", "Http Unauthorized");
-                    editor.putString("InitialLogin", "yes");
+                    Toast.makeText(getApplicationContext(), R.string.unauthorized_toast_msg, Toast.LENGTH_LONG).show();
+                    editor.putString("InitialLogin", "no");
                     editor.apply();
                     startActivity(new Intent(RegularActivity.this, ProfileActivity.class));
                     finish();

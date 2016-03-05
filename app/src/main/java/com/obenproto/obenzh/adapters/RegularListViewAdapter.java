@@ -3,6 +3,7 @@ package com.obenproto.obenzh.adapters;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.obenproto.obenzh.R;
+import com.obenproto.obenzh.activities.ProfileActivity;
 import com.obenproto.obenzh.activities.RegularActivity;
 import com.obenproto.obenzh.api.ObenAPIClient;
 import com.obenproto.obenzh.api.ObenAPIService;
@@ -64,7 +66,6 @@ public class RegularListViewAdapter extends BaseAdapter implements ActivityCompa
     int record_index = 0;
     ExtAudioRecorder extAudioRecorder;
     public static MediaPlayer mediaPlayer;
-
     public static final String TAG = "RegularListViewAdapter";
 
     /**
@@ -490,6 +491,12 @@ public class RegularListViewAdapter extends BaseAdapter implements ActivityCompa
 
                 } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     Log.d("d-Status", "Http Unauthorized");
+                    Toast.makeText(cont_, R.string.unauthorized_toast_msg, Toast.LENGTH_LONG).show();
+                    editor.putString("InitialLogin", "no");
+                    editor.apply();
+
+                    RegularActivity.activity.startActivity(new Intent(RegularActivity.activity, ProfileActivity.class));
+                    RegularActivity.activity.finish();
 
                 } else {
                     Log.d("d-Status", "Server Connection Failure");
