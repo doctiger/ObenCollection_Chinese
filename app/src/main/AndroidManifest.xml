@@ -14,8 +14,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name="com.obenproto.obenzh.activities.ObenUserLogin"
+            android:name=".activities.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,22 +25,11 @@
         </activity>
 
         <activity
-            android:name="com.obenproto.obenzh.activities.ProfileActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".activities.ProfileActivity"
+            android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.obenproto.obenzh.activities.RegularActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:name=".activities.RegularActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

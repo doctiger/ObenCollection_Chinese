@@ -1,21 +1,18 @@
 package com.obenproto.obenzh.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.obenproto.obenzh.R;
-import com.obenproto.obenzh.api.ObenAPIClient;
-import com.obenproto.obenzh.api.ObenAPIService;
-import com.obenproto.obenzh.response.ObenApiResponse;
+import com.obenproto.obenzh.activities.base.BaseActivity;
+import com.obenproto.obenzh.api.APIClient;
+import com.obenproto.obenzh.api.domain.AvatarInfo;
+import com.obenproto.obenzh.api.domain.ObenUser;
+import com.obenproto.obenzh.api.response.GetAllUserAvatarsResponse;
 
 import java.net.HttpURLConnection;
 
@@ -24,219 +21,105 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends BaseActivity implements View.OnClickListener {
 
-    TextView userIDTxt, avatarIDTxt, userEmailTxt;
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-    ProgressBar progressBar;
-    TextView setupAvatar, logoutTxt;
-    public Activity activity = null;
+    TextView tvUserID, tvEmail, tvRegular;
+    RelativeLayout progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.profile_activity);
+        setContentView(R.layout.activity_profile);
 
-        activity = this;
+        progressView = (RelativeLayout) findViewById(R.id.layout_progress_view);
+        tvUserID = (TextView) findViewById(R.id.tv_user_id);
+        tvEmail = (TextView) findViewById(R.id.tv_user_email);
+        tvRegular = (TextView) findViewById(R.id.tv_regular_avatar);
 
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = pref.edit();
+        // Map event handlers.
+        findViewById(R.id.setUpAvatarLbl).setOnClickListener(this);
+        findViewById(R.id.logoutLbl).setOnClickListener(this);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
-
-        userIDTxt = (TextView) findViewById(R.id.userIDLbl);
-        avatarIDTxt = (TextView) findViewById(R.id.avatarIDLbl);
-        userEmailTxt = (TextView) findViewById(R.id.userEmailLbl);
-
-        setupAvatar = (TextView) findViewById(R.id.setUpAvatarLbl);
-        setupAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, RegularActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        logoutTxt = (TextView) findViewById(R.id.logoutLbl);
-        logoutTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onUserLogout();
-                logoutTxt.setEnabled(false);
-                progressBar.setVisibility(View.VISIBLE);
-            }
-        });
-
-        if (pref.getString("InitialLogin", "").equals("yes")) {
-            userIDTxt.setText(String.valueOf(pref.getInt("userID", 0)));
-            avatarIDTxt.setText("");
-            userEmailTxt.setText(pref.getString("userEmail", ""));
-
-        } else {
-            // User login
-            onUserLogin(pref.getString("userEmail", ""), "ObenSesame");
+        // Setup user info.
+        ObenUser user = ObenUser.getSavedUser();
+        if (user != null) {
+            tvUserID.setText(String.valueOf(user.userId));
+            tvEmail.setText(user.email);
         }
     }
 
-    // Recall of user avatar.
-    public void onGetUserAvatar(int userId) {
-        // Email login.
-        ObenAPIService client = ObenAPIClient.newInstance(ObenAPIService.class);
-        Call<ObenApiResponse> call = client.getUserAvatar(userId);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        call.enqueue(new Callback<ObenApiResponse>() {
-            @Override
-            public void onResponse(Response<ObenApiResponse> response, Retrofit retrofit) {
-                if (response.code() == HttpURLConnection.HTTP_OK) { // success
-                    ObenApiResponse response_result = response.body();
-                    int avatarId = response_result.UserAvatar.getAvatarId();
-                    Log.d("avatar ID ", String.valueOf(avatarId));
-
-                    // Save the avatar ID to shared preference.
-                    editor.putInt("avatarID", avatarId);
-                    editor.commit();
-
-                    progressBar.setVisibility(View.GONE);
-
-                    userIDTxt.setText(String.valueOf(pref.getInt("userID", 0)));
-                    avatarIDTxt.setText(String.valueOf(avatarId));
-                    userEmailTxt.setText(pref.getString("userEmail", ""));
-
-                    setupAvatar.setEnabled(true);
-                    logoutTxt.setEnabled(true);
-
-                } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                    Log.d("Status", "Http Unauthorized");
-
-                } else {
-                    Log.d("Status", "Server Connection Failure");
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                userIDTxt.setText(String.valueOf(pref.getInt("userID", 0)));
-                avatarIDTxt.setText(String.valueOf(0));
-                userEmailTxt.setText(pref.getString("userEmail", ""));
-                progressBar.setVisibility(View.GONE);
-
-                setupAvatar.setEnabled(true);
-                logoutTxt.setEnabled(true);
-
-                Log.d("Failure", t.getMessage());
-            }
-        });
+        // Recall getUserAvatar endpoint.
+        getAllUserAvatars();
     }
 
-    // Recall of user logout
-    public void onUserLogout() {
-        // Email login.
-        ObenAPIService client = ObenAPIClient.newInstance(ObenAPIService.class);
-        Call<ObenApiResponse> call = client.userLogout();
-
-        call.enqueue(new Callback<ObenApiResponse>() {
-            @Override
-            public void onResponse(Response<ObenApiResponse> response, Retrofit retrofit) {
-                progressBar.setVisibility(View.GONE);
-
-                if (response.code() == HttpURLConnection.HTTP_OK) { // success
-                    ObenApiResponse response_result = response.body();
-                    String message = response_result.User.getMessage();
-                    Log.d("Logout Sucess:", message);
-
-                    // Save the avatar ID to shared preference.
-                    editor.putString("userEmail", "");
-                    editor.putInt("userID", 0);
-                    editor.putInt("avatarID", 0);
-                    editor.putInt("RegularAvatarID", 0);
-                    editor.putInt("CommercialAvatarID", 0);
-                    editor.putInt("FreestyleAvatarID", 0);
-                    editor.commit();
-
-                    // Go to the Login page.
-                    startActivity(new Intent(ProfileActivity.this, ObenUserLogin.class));
-                    finish();
-
-                } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                    Log.d("Status", "Http Unauthorized");
-                    logoutTxt.setEnabled(true);
-                    Toast.makeText(getApplicationContext(), R.string.unauthorized_toast_msg, Toast.LENGTH_LONG).show();
-
-                } else {
-                    Log.d("Status", "Server Connection Failure");
-                    logoutTxt.setEnabled(true);
+    private void getAllUserAvatars() {
+        ObenUser user = ObenUser.getSavedUser();
+        if (user != null) {
+            helperUtils.avatarLoaded = false;
+            progressView.setVisibility(View.VISIBLE);
+            Call<GetAllUserAvatarsResponse> call = APIClient.getAPIService().getAllUserAvatars(user.userId);
+            call.enqueue(new Callback<GetAllUserAvatarsResponse>() {
+                @Override
+                public void onResponse(Response<GetAllUserAvatarsResponse> response, Retrofit retrofit) {
+                    progressView.setVisibility(View.GONE);
+                    if (response.code() == HttpURLConnection.HTTP_OK) {
+                        if (response.body() != null) {
+                            helperUtils.avatarLoaded = true;
+                            showAvatarInfo(response.body());
+                        }
+                    } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        helperUtils.showMessage(R.string.unauthorized_toast);
+                        showLoginPage();
+                    } else {
+                        helperUtils.showMessage(R.string.Network_Error);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Throwable t) {
-                Log.d("Failure", t.getMessage());
-                logoutTxt.setEnabled(true);
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    progressView.setVisibility(View.GONE);
+                    helperUtils.showMessage(t.getLocalizedMessage());
+                }
+            });
+        }
     }
 
-    public void onUserLogin(String email, String password) {
-        progressBar.setVisibility(View.VISIBLE);
-        setupAvatar.setEnabled(false);
-        logoutTxt.setEnabled(false);
+    private void showAvatarInfo(GetAllUserAvatarsResponse response) {
+        String notExist = "n/a";
+        AvatarInfo chineseRegular = response.getAvatar(CHINESE_REGULAR_MODE);
+        if (chineseRegular != null) {
+            tvRegular.setText(String.valueOf(chineseRegular.Avatar.avatarId));
+        } else {
+            tvRegular.setText(notExist);
+        }
 
-        ObenAPIService client = ObenAPIClient.newInstance(ObenAPIService.class);
-        Call<ObenApiResponse> call = client.userLogin(email, password, "Oben User");
+        // Save loaded avatar info.
+        helperUtils.chineseRegular = chineseRegular;
+    }
 
-        call.enqueue(new Callback<ObenApiResponse>() {
-            @Override
-            public void onResponse(Response<ObenApiResponse> response, Retrofit retrofit) {
-                if (response.code() == HttpURLConnection.HTTP_OK) { // success
-                    ObenApiResponse response_result = response.body();
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.setUpAvatarLbl) {
+            Intent intent = new Intent(ProfileActivity.this, RegularActivity.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.logoutLbl) {
+            requestLogout();
+        }
+    }
 
-                    int userId = response_result.User.getUserId();
-                    editor.putInt("userID", userId);
-                    editor.commit();
+    private void requestLogout() {
+        ObenUser.removeSavedUser();
+        showLoginPage();
+    }
 
-                    // Get the user avatar ID.
-//                    onGetUserAvatar(response_result.User.getUserId());
-
-                    progressBar.setVisibility(View.GONE);
-
-                    userIDTxt.setText(String.valueOf(pref.getInt("userID", 0)));
-                    avatarIDTxt.setText("");
-                    userEmailTxt.setText(pref.getString("userEmail", ""));
-
-                    setupAvatar.setEnabled(true);
-                    logoutTxt.setEnabled(true);
-
-                } else if (response.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
-                    Log.d("User login Status", "Http Unauthorized");
-                    Toast.makeText(getApplicationContext(), R.string.unauthorized_toast_msg, Toast.LENGTH_LONG).show();
-                    editor.putString("InitialLogin", "no");
-                    editor.apply();
-
-                    activity.finish();
-                    activity.startActivity(activity.getIntent());
-
-                } else {
-                    Log.d("User login Status", "Server Connection Failure");
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                userIDTxt.setText(String.valueOf(pref.getInt("userID", 0)));
-                avatarIDTxt.setText("");
-                userEmailTxt.setText(pref.getString("userEmail", ""));
-                progressBar.setVisibility(View.GONE);
-
-                setupAvatar.setEnabled(true);
-                logoutTxt.setEnabled(true);
-
-                Log.d("Failure", t.getMessage());
-            }
-        });
+    private void showLoginPage() {
+        Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

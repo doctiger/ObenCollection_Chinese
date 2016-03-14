@@ -8,4 +8,6 @@
     <color name="colorBlue">#2196F3</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#ffffff</color>
+
+    <color name="oben_blue">#008DFF</color>
 </resources>

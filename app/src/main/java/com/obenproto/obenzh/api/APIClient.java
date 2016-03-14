@@ -15,11 +15,11 @@ import java.util.concurrent.TimeUnit;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
-public class ObenAPIClient {
+public class APIClient {
 
-    public static final String BASE_URL = "https://oben.us/";
+    public static final String BASE_URL = "http://120.27.133.250:8080/";
 
-    private final static OkHttpClient httpClient = new OkHttpClient();
+    private static OkHttpClient httpClient = new OkHttpClient();
 
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
@@ -48,14 +48,17 @@ public class ObenAPIClient {
         CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         httpClient.setCookieHandler(cookieManager); //finally set the cookie handler on client
-    }
-
-    public static <S> S newInstance(Class<S> serviceClass) {
 
         httpClient.setReadTimeout(120, TimeUnit.SECONDS);
         httpClient.setConnectTimeout(120, TimeUnit.SECONDS);
+    }
 
+    public static <S> S newInstance(Class<S> serviceClass) {
         Retrofit retrofit = builder.client(httpClient).build();
         return retrofit.create(serviceClass);
+    }
+
+    public static APIService getAPIService() {
+        return newInstance(APIService.class);
     }
 }

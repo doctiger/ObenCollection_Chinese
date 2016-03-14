@@ -2,17 +2,22 @@ package com.obenproto.obenzh;
 
 import android.app.Application;
 
-import com.obenproto.obenzh.api.ObenAPIClient;
+import com.obenproto.obenzh.api.APIClient;
+import com.obenproto.obenzh.utils.CommonUtils;
+import com.obenproto.obenzh.utils.LocalStorage;
 
-/**
- * Created by Petro Rington on 12/10/2015.
- */
 public class ObenApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        ObenAPIClient.init();
+        initSingletons();
+    }
+
+    private void initSingletons() {
+        APIClient.init();
+        LocalStorage.init(this);
+        CommonUtils.init(this);
     }
 }
