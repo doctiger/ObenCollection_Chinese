@@ -47,6 +47,8 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             tvUserID.setText(String.valueOf(user.userId));
             tvEmail.setText(user.email);
         }
+
+        helperUtils.avatarLoaded = false;
     }
 
     @Override
@@ -59,8 +61,7 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     private void getAllUserAvatars() {
         ObenUser user = ObenUser.getSavedUser();
-        if (user != null) {
-            helperUtils.avatarLoaded = false;
+        if (user != null && !helperUtils.avatarLoaded) {
             progressView.setVisibility(View.VISIBLE);
             Call<GetAllUserAvatarsResponse> call = APIClient.getAPIService().getAllUserAvatars(user.userId);
             call.enqueue(new Callback<GetAllUserAvatarsResponse>() {

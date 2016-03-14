@@ -42,7 +42,7 @@ import retrofit.Retrofit;
 
 public class RegularActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final int LIMIT_COUNT = 36;
+    private static final int LIMIT_COUNT = 35;
     private final int CURRENT_MODE = CHINESE_REGULAR_MODE;
 
     RelativeLayout progressView;
