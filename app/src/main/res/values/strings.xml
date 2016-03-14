@@ -7,12 +7,12 @@
         我们遇到了一个网络故障。我们现在已经成功保存了你们之前做的，你们现在可以继续工作了。我们对给你们带来的任何不便感到抱歉。
     </string>
     <string name="exit_message_str">您所有的录音都已经保存。您可以随时返回并继续录音。</string>
-    <string name="Grant_necessary_permissions">Please go to app settings and grant all necessary permissions.</string>
+    <string name="Grant_necessary_permissions">请转至系统设置并调整相应许可</string>
     <string name="permissions_not_granted">权限是不批。</string>
 
     <!-- String Resources for Login Activity -->
     <string name="Please_Login">请登录</string>
-    <string name="Email">Email</string>
+    <string name="Email">邮件</string>
     <string name="Password">密码</string>
     <string name="Login">登錄</string>
     <string name="Empty_Email">請填寫此領域</string>
@@ -25,19 +25,19 @@
     <string name="Setup_Your_Avatar">设置声音档案</string>
     <string name="User_ID">用户名</string>
     <string name="Avatar_ID">声音档案ID</string>
-    <string name="Regular_Avatar_ID">Regular Avatar ID</string>
-    <string name="Commercial_Avatar_ID">Commercial Avatar ID</string>
-    <string name="Freestyle_Avatar_ID">Freestyle Avatar ID</string>
+    <string name="Regular_Avatar_ID">普通声纹ID账号</string>
+    <string name="Commercial_Avatar_ID">商业声纹ID账号</string>
+    <string name="Freestyle_Avatar_ID">自由用途声纹ID账号</string>
 
     <!-- String Resources for Option Activity -->
-    <string name="Cancel">Cancel</string>
-    <string name="Regular">Regular</string>
-    <string name="Commercial">Commercial</string>
-    <string name="Freestyle">Freestyle</string>
+    <string name="Cancel">取消</string>
+    <string name="Regular">普通</string>
+    <string name="Commercial">商业用途</string>
+    <string name="Freestyle">自由</string>
 
     <!-- String Resources for Regular Activity -->
     <string name="cancelButtonStr">保存并退出</string>
-    <string name="Hear_Sample">Hear Sample</string>
+    <string name="Hear_Sample">听取样本</string>
     <string name="LISTEN">试听</string>
     <string name="REC">录音</string>
     <string name="STOP">停止</string>
