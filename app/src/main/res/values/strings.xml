@@ -7,7 +7,7 @@
         我们遇到了一个网络故障。我们现在已经成功保存了你们之前做的，你们现在可以继续工作了。我们对给你们带来的任何不便感到抱歉。
     </string>
     <string name="exit_message_str">您所有的录音都已经保存。您可以随时返回并继续录音。</string>
-    <string name="Grant_necessary_permissions">Please go to app settings and grant all necessary permissions</string>
+    <string name="Grant_necessary_permissions">Please go to app settings and grant all necessary permissions.</string>
     <string name="permissions_not_granted">权限是不批。</string>
 
     <!-- String Resources for Login Activity -->
